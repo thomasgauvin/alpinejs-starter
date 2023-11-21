@@ -1,3 +1,3 @@
 ﻿# Alpine.js Starter Project
 
- This is a simple sample project using [Alpine.js](https://alpinejs.dev/)https://alpinejs.dev/. 
+ This is a simple sample project using [Alpine.js](https://alpinejs.dev/). 
