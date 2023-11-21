@@ -1,0 +1,59 @@
+<html>
+<head>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body x-data="{ globalMessage: 'Data is passed to children, this is how scope is handled'}">
+    <h2>Text</h2>
+    <h3 x-data="{ message: 'I ❤️ Alpine' }" x-text="message"></h3>
+    <div x-text="globalMessage"></div>
+
+    <h2>Counter</h2>
+    <div x-data="{ count: 0 }">
+        <button x-on:click="count++">Increment</button>
+     
+        <span x-text="count"></span>
+    </div>
+
+    <h2>Dropdown</h2>
+    <div x-data="{ open: false }">
+        <button @click="open = !open">Toggle</button> <!-- @ is an alias for x-on -->
+     
+        <div x-show="open" @click.outside="open = false">Contents...</div>
+    </div>
+
+    <h2>Todo list with search input</h2>
+    <div x-data="{
+        search: '',
+        items: [
+            { description: 'Buy groceries', completed: false },
+            { description: 'Take out the trash', completed: false },
+            { description: 'Clean the house', completed: false },
+            { description: 'Mow the lawn', completed: false },
+        ],
+        get filteredItems() {
+            if (!this.search.trim()) return this.items;
+     
+            return this.items.filter((item) => {
+                return item.description.toLowerCase().includes(this.search.toLowerCase());
+            });
+        }
+    }">
+        <input type="text" x-model="search" placeholder="Search..." /> <!-- x-model allows us to bind to the value of the variable 'search' -->
+     
+        <ul>
+            <template x-for="item in filteredItems">
+                <!-- input checkbox for the completion of every item -->
+                <li>
+                    <input type="checkbox" x-model="item.completed" />
+                    <span x-text="item.description"></span>
+                </li>
+            </template>
+        </ul>
+
+        <h2>Button to log to console</h2>
+        <button x-on:click="console.log(Alpine.raw(items))">Log</button> <!-- Console log shows items as proxy, we can get the raw data with Alpine.raw -->
+    </div>
+
+
+</body>
+</html>
